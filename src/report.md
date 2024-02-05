@@ -4,7 +4,7 @@
 ## Part 1. Установка ОС
 **1. Установлен **Ubuntu 20.04 Server LTS** без графического интерфейса. (Использую программу для виртуализации - VirtualBox).Команда для просмотра`cat /etc/issue`**
 
-![linux_wer](src/images/version_linux.png)
+![linux_wer](images/version_linux.png)
 
 ## Part 2. Создание пользователя
 
@@ -12,7 +12,7 @@
 
 **2. Просматриваю нового пользователя ``cat /etc/passwd``**
 
-![linux_wer](src/images/new_user.png)
+![linux_wer](images/new_user.png)
 
 ## Part 3. Настройка сети ОС
 
@@ -26,38 +26,38 @@
 
 **4.  Вывожу названия сетевых интерфейсов с помощью консольной команды `` ifconfig``**
 
-![check_ifconfig](src/images/ifconfig.png)
+![check_ifconfig](images/ifconfig.png)
 
 - lo (loopback device) – виртуальный интерфейс, присутствующий по умолчанию в любом Linux. Он используется для отладки сетевых программ и запуска серверных приложений на локальной машине.
 
 **5. Сбрасываю свой старый ip адрес командой `sudo dhclient -r enp0s3`**
 
-![reset ip](src/images/drop_ip.png)
+![reset ip](images/drop_ip.png)
 
 **6. И получаю новый командой `sudo dhclient -v enp0s3`**
 
-![getting new ip](src/images/new_ip.png)
+![getting new ip](images/new_ip.png)
 
 **7. Проверяю все это командой `ifconfig`**
 
-![checking ip](src/images/new_ifconfig.png)
+![checking ip](images/new_ifconfig.png)
 
 - Dynamic Host Configuration Protocol (DHCP) — автоматический предоставляет IP адреса и прочие настройки сети (маску сети, шлюз и т.п) компьютерам и различным устройствам в сети. Клиент настроенный на получение адреса по протоколу DHCP посылает запрос к серверу, и тот в свою очередь предоставляет свободный IP адрес клиенту во временное пользование.
 
 **8. Определяю и вывожу на экран внешний ip-адрес шлюза (ip) командой  `wget -O - -q icanhazip.com` либо curl ident.me (предварительно установивив  curl ) и внутренний IP-адрес шлюза, он же ip-адрес по умолчанию (gw) командой `route -n`**
 
-![ip_adresses](src/images/ip_adresses.png)
+![ip_adresses](images/ip_adresses.png)
 
 
 **9. Задаю статичные настройки ip, gw, dns, для этого открываю файл /00-installer-config.yaml для редактирования командой `sudo vim /etc/netplan/00-installer-config.yaml`, отключаю получение адресов от DHCP и присваиваю свой статический адрес**
 
 - файл 00-installer-config.yaml - было: 
 
-![yam_file](src/images/Yam_old.png)
+![yam_file](images/Yam_old.png)
 
 - файл 00-installer-config.yaml - стало: 
 
-![yam_file](src/images/yam_new.png)
+![yam_file](images/yam_new.png)
 
 **10. `sudo netplan apply` - для применения конфигураций**
 
@@ -65,25 +65,25 @@
 
 **12. `ifconfig` - проверяем получили ли мы статистические настройки**
 
-![check_static_adresses](src/images/ifconfig_static.png)
+![check_static_adresses](images/ifconfig_static.png)
 
 **13. `ping -c 10 ya.ru` - и убеждаемся что все работает и нет потери пакетов**
 
-![checking ping](src/images/ping.png)
+![checking ping](images/ping.png)
 
 ## Part 4. Обновление ОС
 
 **1. `sudo apt update` - обновляю Ubuntu**
 
-![updating ubuntu](src/images/update_ubuntu.png)
+![updating ubuntu](images/update_ubuntu.png)
 
 **2. `sudo apt dist-upgrade` - обновляю версию пакетов**
 
-![updating ubuntu](src/images/upgrade.png)
+![updating ubuntu](images/upgrade.png)
 
 **3. И `sudo apt update` проверю на обновление**
 
-![checking updates](src/images/update_done.png)
+![checking updates](images/update_done.png)
 
 
 ## Part 5. Использование команды **sudo**
@@ -94,7 +94,7 @@
 
 **3. `sudo vim /etc/sudoers.d/new` - открываю в вим и записываю такую строку `new ALL=(ALL:ALL) ALL`**
 
-![new ALL](src/images/sudo_2.png)
+![new ALL](images/sudo_2.png)
 
 **4. Потом перехожу в нового пользователя командой su new_user**
 
@@ -102,38 +102,38 @@
 
 **6. Перезапускаю виртуальную машину и вижу, что все изменилось как нам и надо было.**
 
- ![reboot system](src/images/sudo_done.png)
+ ![reboot system](images/sudo_done.png)
 
 
 ## Part 6. Установка и настройка службы времени
 
 **1. `sudo apt install -y ntp` - Устанавливаю NTP протокол для синхронизации времени**
 
-![installing ntp](src/images/time_1.png)
+![installing ntp](images/time_1.png)
 
 **2. `ntpq -p` - Проверяю, что `ntp` подключён к серверам времен**
 
-![connecting to time server](src/images/time_2.png)
+![connecting to time server](images/time_2.png)
 
 **5. `sudo systemctl stop ntp` - остановил нашу команду**
 
 **6. `sudo ntpd -gq` - и принудительно синхронизирую все это**
 
-![synchron ntp&d](src/images/time_3.png)
+![synchron ntp&d](images/time_3.png)
 
 **7. `sudo systemctl start ntp` - снова все запускаю**
 
-![restart and checking](src/images/time_4.png)
+![restart and checking](images/time_4.png)
 
 **8. `apt install systemd-timesyncd` - устанавливаю утилиту запуска синхронизации**
 
-![restart and checking](src/images/time_5.png)
+![restart and checking](images/time_5.png)
 
 **9. `timedatectl set-ntp true` - этой командой запускаю синхронизацию**
 
 **10. `timedatectl show` - и в конце проверяею, что все работает и синхронизируется**
 
-![show time](src/images/time_6.png)
+![show time](images/time_6.png)
 
 
 ## Part 7. Установка и использование текстовых редакторов 
@@ -146,44 +146,44 @@
 
 **3. Пишу свой ник `oceanusp`**
 
-![write file](src/images/vim_1.png)
+![write file](images/vim_1.png)
 
 **4. Нажимаю `:wq` чтобы оно сохранилось и вышло. Затем проверяю сохранилась ли надпись с помощью команды `cat test_VIM.txt`**
-![check file](src/images/vim_2.png)
+![check file](images/vim_2.png)
 
 **5. Снова открываю файл как в пунктк 1 и вхожу в режим редактирования как в пункте 2**
 
 **6. Меняю `oceanusp` на `21 School 21`**
 
-![change file](src/images/vim_3.png)
+![change file](images/vim_3.png)
 
 **8. Нажимаю `escape`**
 
 **9.  Нажимаю `:q!` и выхожу без сохранения**
 
 **10. Проверяю командой `cat test_VIM.txt` что изменения не были сохранены**
-![check file](src/images/vim_4.png)
+![check file](images/vim_4.png)
 
 **11. Для поиска и замены нам понадобится открыть файл**
 
 **12. Нажать `escape` и ввести `:s/искомое слово/слово на которую мы заменим/g` - этот флаг отвечает за то чтобы во всем текстовом файле искомое слово заменили. В моем файле я поменял "usp" на  "zameenaa".**
 
-![search in file](src/images/vim_5.png)
+![search in file](images/vim_5.png)
 
 **13. Сохраняем и выходим**
 
-![check file](src/images/vim_6.png)
+![check file](images/vim_6.png)
 
 
 ###JOE-------------------------------------------
 
 **1. `sudo apt install Joe` - скачиваю `Joe` текстовый редактор.**
 
-![instaling Joe](src/images/joe_1.png)
+![instaling Joe](images/joe_1.png)
 
 **2. `sudo Joe test_JOE.txt` - создаю .txt файл и открываю его для записи**
 
-![ulling file](src/images/joe_2.png)
+![ulling file](images/joe_2.png)
 **Записал все что мне нужно**
 
 **3. `control+k` а потом нажимаю `Q` и он спросит сохранить изменения.**
@@ -192,15 +192,15 @@
 
 **Тут же проверяю сохранилась ли запись прочитав ее с помощью "cat"**
 
-![check file](src/images/joe_3.png)
+![check file](images/joe_3.png)
 
 **4. Снова открывю файл и меняю содержимое на `21 School 21`, но уже без сохраниния -  буква y**
 
-![change file without saving](src/images/joe_4.png)
+![change file without saving](images/joe_4.png)
 
 **Проверяю, что файл, остался без изменений**
 
-![checking file](src/images/joe_5.png)
+![checking file](images/joe_5.png)
 
 **5. Для поиска я нажимаю `control+k` и потом `f`**
 
@@ -208,17 +208,17 @@
 
 **7.Пишу слово на которое мы заменим в моем случае это `zamenaJOE`**
 
-![last vers](src/images/joe_6.png)
+![last vers](images/joe_6.png)
 
 **8. Сохраняю и выхожу**
 
 **Проверяю, что текст изменился**
-![checking file](src/images/joe_7.png)
+![checking file](images/joe_7.png)
 
 ###NANO------------------------------------------------
 **1. `sudo nano test_NANO.txt` - создаю `.txt` файл и открываю его для записи**
 
-![writing file](src/images/nano_1.png)
+![writing file](images/nano_1.png)
 
 **2. Записываю. Нажимаю команду `control+x`**
 
@@ -228,16 +228,16 @@
 
 **Проверяю сохранилась ли запись**
 
-![checking file](src/images/nano_2.png)
+![checking file](images/nano_2.png)
 
 **4.Снова открываю файл и переписываю его на 21 Shooll 21**
 
-![change file](src/images/nano_3.png)
+![change file](images/nano_3.png)
 **а не сохранения изменений аналогично но вместо `y` нужно нажать кнопку `n` и `enter`**
 
 **Сразу проверяю содержимое файла**
 
-![checking file](src/images/nano_4.png)
+![checking file](images/nano_4.png)
 
 **5. Для того чтобы он произвел поиск и замену текста мы нажимаем `control+\`**
 
@@ -245,49 +245,49 @@
 
 **7. И нажимаю `enter`**
 
-![swap text in file](src/images/nano_5.1.png)
+![swap text in file](images/nano_5.1.png)
 
 **8. У нас появился еще одно меню. В этот раз в то же место мы записываем слово на которое хотим поменять, в моем случае это `zamenaNANO`**
 
-![swap text in file](src/images/nano_5.2.png)
+![swap text in file](images/nano_5.2.png)
 
 **9. Спрашивает заменить? Мы говорим да и жмем кнопку `y`**
 
 **10. И сохраняем и выходим, как в пунктах выше**
 **И смотрим наш конечный файл**
 
-![checking file](src/images/nano_6.png)
+![checking file](images/nano_6.png)
 
 
 ## Part 8. Установка и базовая настройка сервиса **SSHD**
 
 **1. Устананавливаю службу SSHd с помощью команды: `sudo apt-get install openssh-server`**
-![install openssh-server](src/images/ssh_1.png)
+![install openssh-server](images/ssh_1.png)
 
 **2. Добавляю автостарт службы при загрузке системы.**
 
 **Для включения автостарта службы воспользуемся командой: `sudo systemctl enable ssh`**
-![active autostart](src/images/ssh_2.png)
+![active autostart](images/ssh_2.png)
 
 **3.Перенастраиваю службу SSHd на порт 2022.**
 **Для этого открываю файл конфигурации с помощью команды: `vim /etc/ssh/sshd_config`**
 **Нашел строку, определяющую порт: Port 22, поменял его на 2022 и раскомментировал строку.**
 
-![Port 22->2022](src/images/ssh_3.png)
+![Port 22->2022](images/ssh_3.png)
 
 > ps (от англ. process status) — программа в Unix-подобных операционных системах, выводящая отчёт о работающих процессах. Ключ -А (-е) позволяет вывести все процессы.
 
 **4. Сохранил и перезапустил командой `sudo service sshd restart` и проверю командой `sudo service sshd status`**
 
-![restart system](src/images/ssh_4.png)
+![restart system](images/ssh_4.png)
 
 **5.Проверяю статус фаервола командой `sudo ufw status` он был  отключен ( по умолчанию) `inactive`, я исправил это командой `sudo ufw enable`**
 
-![checking firewall](src/images/ssh_5.png)
+![checking firewall](images/ssh_5.png)
 
 **6. Открываю порт командой `sudo ufw allow 2022` и еще раз проверяю статус**
 
-![checking status](src/images/ssh_6.png)
+![checking status](images/ssh_6.png)
 
 **9. Перезапускаю систему командой  `sudo reboot`**
 
@@ -295,7 +295,7 @@
 
 **11. Вывод команды  `netstat -tan`**
 
-![netstan -tan](src/images/ssh_7.png)
+![netstan -tan](images/ssh_7.png)
 
 >netstat (network statistics) — утилита командной строки, выводящая на дисплей состояние TCP-соединений (как входящих, так и исходящих), таблицы маршрутизации, число сетевых интерфейсов и сетевую статистику по протоколам. Основное назначение утилиты — поиск сетевых проблем и определение производительности сети.
 
@@ -319,7 +319,7 @@
 
 **2. Запускаю `top`.**
 
-![top](src/images/top_1.png)
+![top](images/top_1.png)
 
 * uptime - 19min
 * количество авторизованных пользователей - 1
@@ -333,29 +333,29 @@
 **2. отсортировка по `PID`**
 **Для сортировки по нужному параметру нажимаю `shift + F`, стрелочками перемещаюсь к нужному параметру и нажимаю `S` и `Q`.**
 
-![top](src/images/top_2.png)
+![top](images/top_2.png)
 
 **3. отсортировка по `PERCENT_CPU`**
-![cpu%](src/images/top_3.png)
+![cpu%](images/top_3.png)
 
 **4. отсортировка по `PERCENT_MEM`**
-![mem](src/images/top_4.png)
+![mem](images/top_4.png)
 
 **5. отсортировка по `TIME`**
-![time](src/images/top_5.png)
+![time](images/top_5.png)
 
 **Для фильтрации по нужному параметру нажимаю `O`, пишу команду `COMMAND=sshd` и нажимаю ENTER. Анологично филтрую и по другим процессам.**
 
-![sshd](src/images/top_filtr.png)
+![sshd](images/top_filtr.png)
 
 **6. отфлиртованный процесс `sshd`**
-![filtr_sshd](src/images/top_filtr2.png)
+![filtr_sshd](images/top_filtr2.png)
 
 **7. `syslog`**
-![syslog](src/images/top_filtr3.png)
+![syslog](images/top_filtr3.png)
 
 **8. с добавление `hostname, clocl, uptime`**
-![time](src/images/top_2.png)
+![time](images/top_2.png)
  
 
 ## Part 10. Использование утилиты **fdisk**
@@ -364,21 +364,21 @@
 
 **`/dev/sda 10.53GIB, 11296309248 bytes, 22063104 sector`**
 
-![fdisk](src/images/10_1.png)
+![fdisk](images/10_1.png)
 
 * Имя /dev/sda
 * Размер 10.53 Гб
 * Колличество секторов 22063104
 * Размер swap 1.6 Gb 
 > Узнать размер swap можно с помощью команды `free -h`
-![fdisk](src/images/10_2.png)
+![fdisk](images/10_2.png)
 
 
 ## Part 11. Использование утилиты **df** 
 
 **1. Для корневого раздела запускаю команду `df /`**
 
-![df](src/images/11_1.png)
+![df](images/11_1.png)
 
 * размер раздела - 8944644
 * размер занятого пространства - 4379708
@@ -388,7 +388,7 @@
 
 **2. Для корневого раздела с командой `df -Th /`**
 
-![df -Th](src/images/11_2.png)
+![df -Th](images/11_2.png)
 
 * размер раздела - 8,6G**
 * размер занятого пространства - 4,2G
@@ -401,53 +401,53 @@
 
 **1. Вывожу в байтах без без символьных ссылок командой `du -B1 -d0 /home /var /var/log`**
 
-![/home /var /var/log](src/images/12_1.png)
+![/home /var /var/log](images/12_1.png)
 
 **Вывожу в человеческом виде без без символьных ссылок командой `du -h -d0 /home /var /var/log`**
 
-![/home /var /var/log](src/images/12_2.png)
+![/home /var /var/log](images/12_2.png)
 
 **2. РВывожу размер всего содержимого в /var/log.**
 
-![/var/log](src/images/12_3.png)
+![/var/log](images/12_3.png)
 
 
 ## Part 13. Установка и использование утилиты **ncdu**
 
 **1. Устанавливаю  командой `sudo apt install ncdu`**
-![install ncdu](src/images/13_1.png)
+![install ncdu](images/13_1.png)
 
 **2. `/home`**
-![home](src/images/13_2.png)
+![home](images/13_2.png)
 
 **3. `/var`**
-![var](src/images/13_3.png)
+![var](images/13_3.png)
 
 **4. `/var/log`**
-![var/log](src/images/13_4.png)
+![var/log](images/13_4.png)
 
 
 ## Part 14. Работа с системными журналами
 
 **`/var/log/dmesg` содержит информацию о драйверах устройств**
 
-![/](src/images/14_1.png)
+![/](images/14_1.png)
 
 **`/var/log/auth.log` информация об авторизации пользователей, включая удачные и неудачные попытки входа в систему, а также задействованные механизмы аутентификации.**
 
-![auth](src/images/14_2.png)
+![auth](images/14_2.png)
 
 **`/var/log/syslog` одержит глобальный системный журнал, в котором пишутся сообщения от ядра Linux, различных служб, сетевых интерфейсов и т.д. с момента запуска системы.**
 
-![syslog](src/images/14_3.png)
+![syslog](images/14_3.png)
 
 **Информация об последней успешной авторизации: `sudo cat /var/log/auth.log | grep login`**
 
-![login](src/images/14_5.png)
+![login](images/14_5.png)
 
 **Перезапустил SSHd службу `sudo systemctl restart ssh` и нашел логи в `/var/log/syslog`**
 
-[sshd](src/images/14_6.png)
+[sshd](images/14_6.png)
 
 
 ## Part 15. Использование планировщика заданий **CRON**
@@ -456,12 +456,12 @@
 
 **2. Для создания задачи я открыл файл планировщик командой `crontab -e` и вписалл следующую строку */2 * * * * uptime. Далее `crontab -l` позволяет посмотреть этот файл**
 
-![crontab](src/images/15_1.png)
+![crontab](images/15_1.png)
 
 **2. Записи в /var/log/syslog:**
-![logcron](src/images/cron_123.png)
+![logcron](images/cron_123.png)
 
 **3. Удаляю конфигурационный файл: `crontab -r`  и пытаюсь вывести список задач после удаления**
-![delcron](src/images/15_3.png)
+![delcron](images/15_3.png)
 
 **Для нас нет списка задач, все отработало корректно, так как минутой ранее я этот список удалил.**
